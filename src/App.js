@@ -25,10 +25,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = places.filter((place) => Number(place.rating) > rating);
+    const filtered = places?.filter((place) => Number(place.rating) >= rating);
 
     setFilteredPlaces(filtered);
-  }, [rating,places]);
+  }, [rating]);
 
   useEffect(() => {
     if (bounds) {
@@ -36,7 +36,7 @@ const App = () => {
 
       getPlacesData(type, bounds.sw, bounds.ne)
         .then((data) => {
-          setPlaces(data.filter((place) => place.name && place.num_reviews > 0));
+          setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
           setFilteredPlaces([]);
           setRating('');
           setIsLoading(false);
@@ -52,7 +52,7 @@ const App = () => {
           <List
             isLoading={isLoading}
             childClicked={childClicked}
-            places={filteredPlaces.length ? filteredPlaces : places}
+            places={filteredPlaces?.length ? filteredPlaces : places}
             type={type}
             setType={setType}
             rating={rating}
@@ -65,7 +65,7 @@ const App = () => {
             setBounds={setBounds}
             setCoords={setCoords}
             coords={coords}
-            places={filteredPlaces.length ? filteredPlaces : places}
+            places={filteredPlaces?.length ? filteredPlaces : places}
           />
         </Grid>
       </Grid>
